@@ -28,10 +28,10 @@
 | category_id        | integer      | null: false                    |
 | status_id          | integer      | null: false                    |
 | delivary_charge_id | integer      | null: false                    |
-| ship_from_id       | interger     | null: false                    |
+| prefecture_id      | interger     | null: false                    |
 | days_to_ship_id    | integer      | null: false                    |
 | price              | integer      | null: false                    | 
-| user_id            | references   | null: false, foreign_key: true |
+| user               | references   | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
@@ -44,13 +44,13 @@
 
 | Column        | Type       | Options                        |
 | ------------- | ---------- | ------------------------------ |
-| user_id       | references | null: false, foreign_key: true | 
-| item_id       | references | null: false, foreign_key: true |
+| user          | references | null: false, foreign_key: true | 
+| item          | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :user
 - belongs_to :item
-- has_one :addresses
+- has_one :address
 
 
 
@@ -64,7 +64,7 @@
 | address       | string     | null: false                    |
 | building      | string     |                                | 
 | phone_number  | string     | null: false                    |
-| sold_log_id   | references | null: false, foreign_key: true |
+| sold_log      | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :sold_logs
+- belongs_to :sold_log
