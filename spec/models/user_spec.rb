@@ -10,8 +10,18 @@ RSpec.describe User, type: :model do
       it "全てのカラムに値が存在すれば登録できる" do
         expect(@user).to be_valid
       end
-      it "passwordが「半角英数混合で６文字以上」であれば登録できる" do
+      it "passwordが半角英数混合かつ6文字以上であれば登録できる" do
+        @user.password = Faker::Lorem.characters(number: 6, min_alpha: 1, min_numeric: 1)
+        @user.password_confirmation = @user.password
+        expect(@user).to be_valid
+      end
+      it "passwordが半角英数混合であれば登録できる" do
         @user.password = Faker::Lorem.characters(number: 8, min_alpha: 1, min_numeric: 1)
+        @user.password_confirmation = @user.password
+        expect(@user).to be_valid
+      end
+      it "passwordが6文字以上であれば登録できる" do
+        @user.password = Faker::Lorem.characters(number: 6, min_alpha: 1, min_numeric: 1)
         @user.password_confirmation = @user.password
         expect(@user).to be_valid
       end
@@ -59,8 +69,25 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password can't be blank")
       end
+      it "passwordが６文字未満だと登録できない" do
+        @user.password = Faker::Lorem.characters(number: 5, min_alpha: 1, min_numeric: 1)
+        @user.password_confirmation = @user.password
+        @user.valid?
+      end
       it "passwordが半角英数字混合でないと登録できない" do
         @user.password = Faker::Alphanumeric.alpha(number: 10)
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it "passwordは半角数字のみでは登録できない" do
+        @user.password = Faker::Number.number(digits: 10)
+        @user.password_confirmation = @user.password
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+      it "passwordは全角では登録できない" do
+        @user.password = "ｐａｓｓｗｏｒｄ１１"
         @user.password_confirmation = @user.password
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is invalid")
