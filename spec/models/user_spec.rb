@@ -73,6 +73,7 @@ RSpec.describe User, type: :model do
         @user.password = Faker::Lorem.characters(number: 5, min_alpha: 1, min_numeric: 1)
         @user.password_confirmation = @user.password
         @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
       end
       it "passwordが半角英数字混合でないと登録できない" do
         @user.password = Faker::Alphanumeric.alpha(number: 10)
