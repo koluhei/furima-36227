@@ -15,7 +15,7 @@
 
 ### Association
 - has_many :items
-- has_many :sold_logs
+- has_many :orders
 
 
 
@@ -35,8 +35,7 @@
 
 ### Association
 - belongs_to :user
-- has_one :sold_log
-
+- has_one :order
 
 
 ## orders テーブル
@@ -67,4 +66,4 @@
 | order         | references | null: false, foreign_key: true |
 
 ### Association
-- belongs_to :sold_log
+- belongs_to :order
