@@ -39,7 +39,7 @@
 
 
 
-## sold_logs テーブル
+## orders テーブル
 （user_idで購入者、item_idで購入したものと出品者を管理）
 
 | Column        | Type       | Options                        |
@@ -64,7 +64,7 @@
 | address       | string     | null: false                    |
 | building      | string     |                                | 
 | phone_number  | string     | null: false                    |
-| sold_log      | references | null: false, foreign_key: true |
+| order         | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :sold_log
