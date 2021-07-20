@@ -1,11 +1,12 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :move_to_index
+
   def index
-    @item = Item.find(params[:item_id])
     @order_address = OrderAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
       pay_jp
@@ -16,7 +17,17 @@ class OrdersController < ApplicationController
     end
   end
 
+
+
   private
+
+  def move_to_index
+    @item = Item.find(params[:item_id])
+    if current_user.id == @item.user.id
+      redirect_to root_path
+    end
+  end
+
   def order_params
     params.require(:order_address).permit(:postal_number, :prefecture_id, :city, :address, :building, :phone_number).merge(token: params[:token], item_id: params[:item_id], user_id: current_user.id)
   end
