@@ -3,8 +3,9 @@ class ItemsController < ApplicationController
   before_action :item_set, only: [:show, :edit, :update, :destroy]
   before_action :move_to_index, only: [:edit, :update, :destroy]
   before_action :soldout_move_to_index, only: [:edit, :update, :destroy]
+  
   def index
-    @items = Item.includes(:order).order("created_at DESC")
+    @items = Item.includes(:user).order("created_at DESC")
   end
 
   def new
